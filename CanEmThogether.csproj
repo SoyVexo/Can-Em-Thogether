@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- 1) Carpeta de instalación del juego (solo se usa para localizar las DLL al compilar) -->
+    <GameDir>C:\Program Files (x86)\Steam\steamapps\common\Can 'Em All</GameDir>
+    <!-- 2) Carpeta net6 o net8 dentro de MelonLoader (la que exista en la instalación del juego) -->
+    <MLNet>net6</MLNet>
+
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>CanEmThogether</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameDir)\MelonLoader\$(MLNet)\MelonLoader.dll" />
+    <Reference Include="$(GameDir)\MelonLoader\$(MLNet)\0Harmony.dll" />
+    <Reference Include="$(GameDir)\MelonLoader\$(MLNet)\Il2CppInterop.Runtime.dll" />
+    <Reference Include="$(GameDir)\MelonLoader\$(MLNet)\Il2CppInterop.Common.dll" />
+    <Reference Include="$(GameDir)\MelonLoader\Il2CppAssemblies\*.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="CopyToMods" AfterTargets="Build">
+    <Copy SourceFiles="$(OutputPath)CanEmThogether.dll" DestinationFolder="$(GameDir)\Mods" ContinueOnError="true" />
+  </Target>
+</Project>
